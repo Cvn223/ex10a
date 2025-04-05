@@ -32,7 +32,12 @@
     </div>
     <div class="mb-3 mt-3">
         <label for="lname" class="form-label"><span style="color:red">*</span>Inseam (cm)
-        &nbsp;&nbsp;<img src="./info_btn.png" width="20" height="20"/></label>
+        &nbsp;&nbsp;<img src="./info_btn.png" width="20" height="20"
+        onClick="(function(){
+          var modal1 = new bootstrap.Modal(document.getElementById('myModal'));
+          document.getElementById('info-img').src='./inseam.png';
+          modal1.toggle();
+        })();return false;"/></label>
         <input type="text" class="form-control" id="myInseam" name="myInseam"/>
     </div>
     <button type="submit" class="btn btn-primary">Calculate</button>
@@ -46,6 +51,18 @@
     <div class="modal-content">
       <div class="modal-body">
         <img src="./height.jpeg" id="info-img" width="470" height="250"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="./inseam.png" id="info-img" width="470" height="250"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

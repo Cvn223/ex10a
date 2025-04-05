@@ -1,53 +1,61 @@
-function sizeCalculate() {
-  let t = document.querySelector('input[name="btypeRad"]:checked').value;
-  let h = (document.getElementById("myHeight").value).trim();
-  let i = (document.getElementById("myInseam").value).trim();
-  let size;
-  //xxxxx calculate bike size xxxxx
-  if(t == 2){//road bike
-    if(h >= 155 && h <= 163){
-       size = '50';
-    }else if(h >= 164 && h <= 169){
-       if(i >= 74 && h <= 77){
-        size = '52';
-       }else if(i > 77){
-        size = '54';
-       }else{
-        size = '50';
-       }
-    }else if(h >= 170 && h <= 179){
-       if(i >= 78 && h <= 82){
-        size = '54';
-       }else if(i > 82){
-        size = '56';
-       }else{
-        size = '52';
-       }
-    }else if(h >= 180){
-       if(i >= 78){
-        size = '56';
-       }else{
-        size = '54';
-       }
-    }else{
-       size = 'N/A';
-    }
-  }else{//mountain bike
-    if(h >= 155 && h <= 163){
-      size = 'S';
-   }else if(h >= 164 && h <= 169){
-      size = 'M';
-   }else if(h >= 170 && h <= 179){
-      size = 'L';
-   }else if(h >= 180){
-      size = 'XL';
-   }else{
-      size = 'N/A';
+function validateForm() {
+   const height = document.getElementById("myHeight").value.trim();
+   const inseam = document.getElementById("myInseam").value.trim();
+ 
+   if (!isValidNumber(height)) {
+     alert("Invalid value for height! Please enter a valid number.");
+     document.getElementById("myHeight").focus();
+     return false;
    }
-  }
-  //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-  return size;
-}
+ 
+   if (!isValidNumber(inseam)) {
+     alert("Invalid value for inseam! Please enter a valid number.");
+     document.getElementById("myInseam").focus();
+     return false;
+   }
+ 
+   sizeCalculate();
+   return false; // ป้องกันการ submit จริง
+ }
+ 
+ function isValidNumber(value) {
+   return !isNaN(parseFloat(value)) && isFinite(value);
+ }
+ 
+ function sizeCalculate() {
+   let bikeType = document.querySelector('input[name="btypeRad"]:checked').value;
+   let height = parseInt(document.getElementById("myHeight").value.trim(), 10);
+   let inseam = parseInt(document.getElementById("myInseam").value.trim(), 10);
+ 
+   if (isNaN(height) || isNaN(inseam)) {
+     alert("Please enter valid numeric values for height and inseam.");
+     return;
+   }
+ 
+   let size;
+   if (bikeType === "road") {
+     size = getRoadBikeSize(height, inseam);
+   } else {
+     size = getMountainBikeSize(height, inseam);
+   }
+ 
+   alert(`Bike size based on your height / inseam is: ${size}`);
+ }
+ 
+ function getRoadBikeSize(height, inseam) {
+   if (height < 155) return "N/A";
+   if (height <= 163) return "50";
+   if (height <= 169) return inseam > 77 ? "54" : "52";
+   if (height <= 179) return inseam > 82 ? "56" : "54";
+   return inseam >= 78 ? "56" : "54";
+ }
+ 
+ function getMountainBikeSize(height, inseam) {
+   if (height < 155) return "N/A";
+   if (height <= 163) return "15\"";
+   if (height <= 169) return inseam > 77 ? "17\"" : "16\"";
+   if (height <= 179) return inseam > 82 ? "19\"" : "17\"";
+   return inseam >= 78 ? "21\"" : "19\"";
+ }
 
 
